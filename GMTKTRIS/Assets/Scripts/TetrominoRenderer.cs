@@ -35,6 +35,7 @@ public class TetrominoRenderer : MonoBehaviour
                 Sprite sprite = spriteManager.GetSprite(id, i);
                 if (sprite != null)
                     component.spriteRenderer.sprite = sprite;
+                Console.WriteLine("Here");
             }
         }
     }
