@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -21,6 +22,8 @@ public class TetrisGrid : MonoBehaviour
     private int[,] cells;
 
 
+    private bool rotate;
+    private bool clockwise;
     public Vector2Int inputDirection;
 
     public float originalTickLenght;
@@ -57,14 +60,32 @@ public class TetrisGrid : MonoBehaviour
         if (Input.GetAxis("Horizontal") < 0) inputDirection = Vector2Int.left;
         if (Input.GetAxis("Horizontal") > 0) inputDirection = Vector2Int.right;
         if (Input.GetAxis("Vertical") < 0) realTickLength = originalTickLenght * 0.5f;
-
         else realTickLength = originalTickLenght;
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rotate = true;
+            clockwise = false;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            rotate = true;
+            clockwise = false;
+        }
 
         if (passedTickTime >= realTickLength)
         {
+            if (rotate && CanRotate(fallingShape))
+            {
+                Rotate(fallingShape, false);
+                rotate = false;
+            }
+
             if (CanMove(fallingShape, inputDirection))
             {
                 Move(fallingShape, inputDirection);
+                inputDirection = Vector2Int.zero;
             }
 
             if (CanMove(fallingShape, Vector2Int.down))
@@ -77,12 +98,9 @@ public class TetrisGrid : MonoBehaviour
                 ShapeHasLanded(fallingShape);
             }
 
-            // UpdateTiles();
-
             passedTickTime = 0;
         }
 
-        inputDirection = Vector2Int.zero;
         passedTickTime += Time.deltaTime;
     }
 
@@ -117,6 +135,30 @@ public class TetrisGrid : MonoBehaviour
 
         fallingShape.data.Position = new Vector2Int(Random.Range(3, 8), 17);
         fallingShape.transform.position = new Vector3(fallingShape.data.Position.x, fallingShape.data.Position.y);
+    }
+
+    private bool CanRotate(Shape shape)
+    {
+        for (int i = 0; i < shape.data.Shape.ToList().Count; i++)
+        {
+            var newpos = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
+            newpos += new Vector2Int((int) shape.transform.position.x, (int) shape.transform.position.y);
+            if (newpos.x < 0 || newpos.x > cells.GetLength(0) - 1 || newpos.y < 0 || tiles[newpos.x, newpos.y].State != 0) return false;
+        }
+
+        return true;
+    }
+
+    private void Rotate(Shape shape, bool clockwise)
+    {
+        var newShape = new Vector2Int[4];
+        for (int i = 0; i < shape.data.Shape.ToList().Count; i++)
+        {
+            newShape[i] = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
+            shape.transform.GetChild(i).transform.position = shape.transform.position + new Vector3(newShape[i].x, newShape[i].y);
+        }
+
+        shape.data.Shape = newShape;
     }
 
     private void SolidifyShape(Shape shape)
