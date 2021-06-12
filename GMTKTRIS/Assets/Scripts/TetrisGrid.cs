@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
 public class TetrisGrid : MonoBehaviour
@@ -20,19 +18,17 @@ public class TetrisGrid : MonoBehaviour
     private Shape fallingShape;
     public Shape shapePrefab;
 
-    // private int[,] cells;
-
-    public Vector2Int inputDirection;
-
     public bool paused;
 
     public float originalTickLenght;
     private float realTickLength;
     private float passedTickTime;
 
+    public List<Shape> fallingShapes;
+    public List<Shape> fallingShapeOffsets;
+
     private void Awake()
     {
-        // cells = new int[size.x, size.y];
         tiles = new Tile[size.x, size.y];
     }
 
@@ -40,7 +36,7 @@ public class TetrisGrid : MonoBehaviour
     {
         realTickLength = originalTickLenght;
         InitGrid();
-        NewShape();
+        // NewShape();
     }
 
     [ContextMenu("Draw")]
@@ -51,6 +47,7 @@ public class TetrisGrid : MonoBehaviour
             for (int y = 0; y < size.y; y++)
             {
                 tiles[x, y] = Instantiate(squarePrefab, new Vector3(x, y, 1), Quaternion.identity, transform);
+                tiles[x, y].SetColor(new Color());
             }
         }
     }
@@ -62,24 +59,25 @@ public class TetrisGrid : MonoBehaviour
         if (Input.GetAxis("Vertical") < 0) realTickLength = originalTickLenght * 0.5f;
         else realTickLength = originalTickLenght;
 
-        if (Input.GetKeyDown(KeyCode.Q) && CanRotate(fallingShape, false)) Rotate(fallingShape, false);
-        if (Input.GetKeyDown(KeyCode.E) && CanRotate(fallingShape, true)) Rotate(fallingShape, true);
+        // if (Input.GetKeyDown(KeyCode.Q) && CanRotate(fallingShape, false)) Rotate(fallingShape, false);
+        // if (Input.GetKeyDown(KeyCode.E) && CanRotate(fallingShape, true)) Rotate(fallingShape, true);
 
         if (Input.GetAxis("Horizontal") != 0)
         {
-            if (Input.GetKeyDown(KeyCode.D) && CanMove(fallingShape, Vector2Int.right)) Move(fallingShape, Vector2Int.right);
-            if (Input.GetKeyDown(KeyCode.A) && CanMove(fallingShape, Vector2Int.left)) Move(fallingShape, Vector2Int.left);
+            if (Input.GetKeyDown(KeyCode.D) && CanMove(fallingShapes, Vector2Int.right)) Move(fallingShapes, Vector2Int.right);
+            if (Input.GetKeyDown(KeyCode.A) && CanMove(fallingShapes, Vector2Int.left)) Move(fallingShapes, Vector2Int.left);
         }
 
         if (passedTickTime >= realTickLength)
         {
-            if (CanMove(fallingShape, Vector2Int.down))
+            if (CanMove(fallingShapes, Vector2Int.down))
             {
-                Move(fallingShape, Vector2Int.down);
+                Move(fallingShapes, Vector2Int.down);
             }
             else
             {
-                ShapeHasLanded(fallingShape);
+                // ShapeHasLanded(fallingShape);
+                ShapesHaveLanded(fallingShapes);
             }
 
             passedTickTime = 0;
@@ -90,12 +88,29 @@ public class TetrisGrid : MonoBehaviour
 
     private void ShapeHasLanded(Shape shape)
     {
-        Debug.Log("landed");
         SolidifyShape(shape);
         RemoveLines();
 
-        NewShape();
+        // NewShape();
     }
+
+    private void ShapesHaveLanded(List<Shape> shapes)
+    {
+        SolidifyShapes(shapes);
+        RemoveLines();
+
+        SwitchToBuildGrid();
+    }
+
+    private void SwitchToBuildGrid()
+    {
+        var buildGrid = FindObjectOfType<BuildGrid>();
+        buildGrid.Go();
+
+        paused = true;
+        fallingShapes = null;
+    }
+
 
     private int RemoveLines()
     {
@@ -125,7 +140,7 @@ public class TetrisGrid : MonoBehaviour
         for (int i = 0; i < size.x - 1; i++)
         {
             tiles[i, row].State = 0;
-            tiles[i, row].SetColor(Color.white);
+            tiles[i, row].SetColor(new Color());
         }
 
         for (int x = 0; x < size.x; x++)
@@ -134,13 +149,15 @@ public class TetrisGrid : MonoBehaviour
             {
                 tiles[x, y].State = tiles[x, y + 1].State;
                 tiles[x, y].SetColor(tiles[x, y + 1].GetColor());
+                tiles[x, y].SetSprite(tiles[x, y + 1].GetComponent<SpriteRenderer>().sprite);
+                tiles[x, y].transform.rotation = tiles[x, y + 1].transform.rotation;
             }
         }
     }
 
     private void NewShape()
     {
-        int id = Random.Range(0,7);
+        int id = Random.Range(0, 7);
         //int id = 1;
         fallingShape = Instantiate(shapePrefab);
 
@@ -154,8 +171,8 @@ public class TetrisGrid : MonoBehaviour
             fallingShape.transform.GetChild(i).GetComponent<SpriteRenderer>().color = fallingShape.data.Color;
         }
 
-        fallingShape.data.Position = new Vector2Int(Random.Range(2, 8), 17);
-        fallingShape.transform.position = new Vector3(fallingShape.data.Position.x, fallingShape.data.Position.y);
+        // fallingShape.data.Position = new Vector2Int(Random.Range(2, 8), 17);
+        fallingShape.transform.position = new Vector3(fallingShape.transform.position.x, fallingShape.transform.position.y);
         fallingShape.renderer.Rotate(fallingShape.data.Rotation * 90);
         fallingShape.renderer.id = id;
     }
@@ -193,27 +210,48 @@ public class TetrisGrid : MonoBehaviour
 
     private void SolidifyShape(Shape shape)
     {
-        foreach (var pos in shape.data.Shape)
+        for (int i = 0; i < shape.data.Shape.Length; i++)
         {
-            var x = shape.data.Position.x + pos.x;
-            var y = shape.data.Position.y + pos.y;
+            var pos = shape.data.Shape[i];
+            var x = (int) shape.transform.position.x + pos.x;
+            var y = (int) shape.transform.position.y + pos.y;
             if (x < size.x && y < size.y && y >= 0)
             {
                 tiles[x, y].State = 1;
                 tiles[x, y].SetColor(shape.data.Color);
+                tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
+                tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
             }
         }
 
-        Destroy(fallingShape.gameObject);
+        Destroy(shape.gameObject);
+    }
+
+    private void SolidifyShapes(List<Shape> shapes)
+    {
+        foreach (Shape shape in shapes)
+        {
+            SolidifyShape(shape);
+        }
     }
 
     private bool CanMove(Shape shape, Vector2Int direction)
     {
         foreach (var pos in shape.data.Shape)
         {
-            var x = shape.data.Position.x + pos.x + direction.x;
-            var y = shape.data.Position.y + pos.y + direction.y;
+            var x = (int) shape.transform.position.x + pos.x + direction.x;
+            var y = (int) shape.transform.position.y + pos.y + direction.y;
             if (x < 0 || x > size.x - 1 || y < 0 || tiles[x, y].State != 0) return false;
+        }
+
+        return true;
+    }
+
+    private bool CanMove(List<Shape> shapes, Vector2Int direction)
+    {
+        foreach (Shape shape in shapes)
+        {
+            if (!CanMove(shape, direction)) return false;
         }
 
         return true;
@@ -221,7 +259,29 @@ public class TetrisGrid : MonoBehaviour
 
     private void Move(Shape shape, Vector2Int direction)
     {
-        shape.data.Position += direction;
-        shape.transform.position = new Vector3(shape.data.Position.x, shape.data.Position.y);
+        // shape.data.Position += direction;
+        shape.transform.position += new Vector3(direction.x, direction.y);
+    }
+
+    private void Move(List<Shape> shapes, Vector2Int direction)
+    {
+        for (int i = 0; i < shapes.Count; i++)
+        {
+            Move(shapes[i], direction);
+        }
+    }
+
+    public void AddFallingShapes(List<Shape> placedShapes)
+    {
+        fallingShapes = placedShapes.ToList();
+
+        for (int i = 0; i < fallingShapes.Count; i++)
+        {
+            var pos = placedShapes[i].transform.localPosition + new Vector3(0, 10);
+            fallingShapes[i].transform.SetParent(transform);
+            fallingShapes[i].transform.position = pos;
+        }
+
+        paused = false;
     }
 }

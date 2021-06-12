@@ -29,4 +29,6 @@ public class Tile : MonoBehaviour
     }
 
     public Color GetColor() => Renderer.color;
+
+    public void SetSprite(Sprite sprite) => Renderer.sprite = sprite;
 }

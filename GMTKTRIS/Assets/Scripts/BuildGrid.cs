@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -22,8 +21,11 @@ namespace DefaultNamespace
 
         public int nextShapeCount = 4;
         public List<Shape> nextShapes = new List<Shape>();
+        public List<Shape> placedShapes = new List<Shape>();
 
         private Stack<Tetromino> bag = new Stack<Tetromino>();
+
+        public bool paused;
 
         private void Awake()
         {
@@ -35,6 +37,14 @@ namespace DefaultNamespace
         {
             InitGrid();
 
+            MakeNextShapes();
+
+            ShowNextShapes();
+            NextShape();
+        }
+
+        private void MakeNextShapes()
+        {
             for (int i = 0; i < nextShapeCount; i++)
             {
                 var shape = Instantiate(shapePrefab, transform, false);
@@ -45,12 +55,11 @@ namespace DefaultNamespace
                     shape.transform.GetChild(j).GetComponent<SpriteRenderer>().color = shape.data.Color;
                 }
 
+                shape.renderer.Rotate(shape.data.Rotation * 90);
+                shape.renderer.id = shape.data.id;
+
                 nextShapes.Add(shape);
             }
-
-            ShowNextShapes();
-
-            NextShape();
         }
 
         private void ShowNextShapes()
@@ -61,9 +70,9 @@ namespace DefaultNamespace
             }
         }
 
-
         private void Update()
         {
+            if (paused) return;
             if (Input.GetKeyDown(KeyCode.W)) Move(movingShape, Vector2Int.up);
             if (Input.GetKeyDown(KeyCode.A)) Move(movingShape, Vector2Int.left);
             if (Input.GetKeyDown(KeyCode.S)) Move(movingShape, Vector2Int.down);
@@ -77,19 +86,55 @@ namespace DefaultNamespace
         {
             if (IsValidToPlace(shape, true))
             {
-                foreach (var pos in shape.data.Shape)
+                for (int i = 0; i < shape.data.Shape.Length; i++)
                 {
+                    var pos = shape.data.Shape[i];
                     int x = (int) shape.transform.localPosition.x + pos.x;
                     int y = (int) shape.transform.localPosition.y + pos.y;
                     if (x < size.x && y < size.y && y >= 0)
                     {
                         tiles[x, y].State = 1;
                         tiles[x, y].SetColor(shape.data.Color);
+                        tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
+                        tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
                     }
                 }
 
-                Destroy(movingShape.gameObject);
-                NextShape();
+                // Destroy(movingShape.gameObject);
+
+                if (nextShapes.Count > 0)
+                {
+                    NextShape();
+                }
+                else
+                {
+                    // GameObject shapeBundle = new GameObject();
+                    // for (int i = 0; i < placedShapes.Count; i++)
+                    // {
+                    // placedShapes[i].transform.SetParent(shapeBundle.transform, true);
+                    // }
+
+                    ClearTiles();
+
+                    var tetrisGrid = FindObjectOfType<TetrisGrid>();
+                    tetrisGrid.AddFallingShapes(placedShapes);
+                    placedShapes = new List<Shape>();
+                    movingShape = null;
+
+                    paused = true;
+                }
+            }
+        }
+
+        private void ClearTiles()
+        {
+            for (int x = 0; x < size.x; x++)
+            {
+                for (int y = 0; y < size.y; y++)
+                {
+                    tiles[x, y].State = 0;
+                    tiles[x, y].SetColor(new Color());
+                }
             }
         }
 
@@ -158,6 +203,10 @@ namespace DefaultNamespace
             {
                 shape.data.Shape = newShape;
                 for (int i = 0; i < newShape.Length; i++) shape.transform.GetChild(i).localPosition = new Vector2(shape.data.Shape[i].x, shape.data.Shape[i].y);
+
+                shape.data.Rotation += clockwise ? 1 : -1;
+                shape.data.Rotation = shape.data.Rotation % 4;
+                shape.renderer.Rotate(clockwise ? 90 : -90);
             }
 
             if (CanRotate(shape, clockwise, true)) lastValidPositions = newShape;
@@ -167,6 +216,7 @@ namespace DefaultNamespace
         {
             movingShape = nextShapes.ToList().First();
             nextShapes.RemoveAt(0);
+            placedShapes.Add(movingShape);
 
             movingShape.transform.localPosition += new Vector3(0, 4);
 
@@ -194,8 +244,17 @@ namespace DefaultNamespace
                 {
                     tiles[x, y] = Instantiate(squarePrefab, transform, false);
                     tiles[x, y].transform.localPosition = new Vector3(x, y, 1);
+                    tiles[x, y].SetColor(new Color());
                 }
             }
+        }
+
+        public void Go()
+        {
+            MakeNextShapes();
+            ShowNextShapes();
+            NextShape();
+            paused = false;
         }
     }
 }
