@@ -50,7 +50,7 @@ public class TetrisGrid : MonoBehaviour
         {
             for (int y = 0; y < cells.GetLength(1); y++)
             {
-                tiles[x, y] = Instantiate(squarePrefab, new Vector3(x, y), Quaternion.identity, transform);
+                tiles[x, y] = Instantiate(squarePrefab, new Vector3(x, y, 1), Quaternion.identity, transform);
             }
         }
     }

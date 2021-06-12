@@ -306,7 +306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546472552}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 10}
+  m_LocalPosition: {x: -3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -357,10 +357,10 @@ MonoBehaviour:
   spriteData:
   - ID: 0
     Images:
-    - {fileID: 21300000, guid: f2619db6c56986b488edbfbf61d32887, type: 3}
-    - {fileID: 21300000, guid: c6cc647570c79cb4ead219049b27e096, type: 3}
-    - {fileID: 21300000, guid: 3b44007b19ed72340b30f5cf16a19c67, type: 3}
-    - {fileID: 21300000, guid: 8fe247530accef6469190001a70617c6, type: 3}
+    - {fileID: 21300000, guid: 1109996f72a425b4a9df9dc9cd195c18, type: 3}
+    - {fileID: 21300000, guid: 1c65d9880bfb30b4dbc0ef6a0117a960, type: 3}
+    - {fileID: 21300000, guid: 9d467508e33580a42bf7c53730567fc2, type: 3}
+    - {fileID: 21300000, guid: 35fdcf3334a1ac444af93a4084439a0c, type: 3}
 --- !u!4 &1723996603
 Transform:
   m_ObjectHideFlags: 0
