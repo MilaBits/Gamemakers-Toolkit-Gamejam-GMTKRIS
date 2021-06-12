@@ -240,10 +240,10 @@ MonoBehaviour:
   squarePrefab: {fileID: 7354637411103497151, guid: c8660cbf7f2671246b8c801820b69e6e, type: 3}
   shapes:
   - Shape:
+    - {x: -1, y: -1}
     - {x: 0, y: -1}
     - {x: 0, y: 0}
-    - {x: -1, y: 0}
-    - {x: -1, y: -1}
+    - {x: 1, y: 0}
     Position: {x: 0, y: 0}
     Color: {r: 0.94117653, g: 0, b: 0, a: 1}
     Rotation: {x: 0, y: 0}
@@ -436,3 +436,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d48c21d5f3544541a2ae30352f30f77, type: 3}
+--- !u!1 &1968829845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1968829846}
+  - component: {fileID: 1968829847}
+  m_Layer: 0
+  m_Name: BuildGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1968829846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968829845}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11, y: 10, z: -5.5432405}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1968829847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968829845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e629be15aa164e88b5c981bf6939ea34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squarePrefab: {fileID: 7354637411103497151, guid: c8660cbf7f2671246b8c801820b69e6e, type: 3}
+  shapePrefab: {fileID: 2219339228789870974, guid: 5c96481103096c04487aebd0eb63c44f, type: 3}
+  size: {x: 10, y: 10}

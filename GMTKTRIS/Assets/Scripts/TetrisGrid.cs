@@ -21,8 +21,9 @@ public class TetrisGrid : MonoBehaviour
 
     // private int[,] cells;
 
-
     public Vector2Int inputDirection;
+
+    public bool paused;
 
     public float originalTickLenght;
     private float realTickLength;
@@ -55,6 +56,8 @@ public class TetrisGrid : MonoBehaviour
 
     private void Update()
     {
+        if (paused) return;
+
         if (Input.GetAxis("Vertical") < 0) realTickLength = originalTickLenght * 0.5f;
         else realTickLength = originalTickLenght;
 
