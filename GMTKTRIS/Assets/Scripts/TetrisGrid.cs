@@ -108,8 +108,9 @@ public class TetrisGrid : MonoBehaviour
 
     private void NewShape()
     {
+        const int id = 4;
         fallingShape = Instantiate(shapePrefab);
-        fallingShape.data = shapes[Random.Range(0, shapes.Count)];
+        fallingShape.data = shapes[id];
         for (int i = 0; i < fallingShape.data.Shape.Length; i++)
         {
             fallingShape.transform.GetChild(i).localPosition += new Vector3(fallingShape.data.Shape[i].x, fallingShape.data.Shape[i].y);
@@ -118,6 +119,8 @@ public class TetrisGrid : MonoBehaviour
 
         fallingShape.data.Position = new Vector2Int(Random.Range(3, 8), 17);
         fallingShape.transform.position = new Vector3(fallingShape.data.Position.x, fallingShape.data.Position.y);
+        fallingShape.renderer.Rotate(fallingShape.data.Rotation * 90);
+        fallingShape.renderer.id = id;
     }
 
     private bool CanRotate(Shape shape, bool clockwise)
@@ -141,7 +144,10 @@ public class TetrisGrid : MonoBehaviour
             shape.transform.GetChild(i).transform.position = shape.transform.position + new Vector3(newShape[i].x, newShape[i].y);
         }
 
+        shape.data.Rotation += clockwise ? 1 : -1;
+        shape.data.Rotation = shape.data.Rotation % 4;
         shape.data.Shape = newShape;
+        shape.renderer.Rotate(clockwise ? 90 : -90);
     }
 
     private void SolidifyShape(Shape shape)
@@ -154,7 +160,7 @@ public class TetrisGrid : MonoBehaviour
             {
                 tiles[x, y].State = 1;
                 tiles[x, y].SetColor(shape.data.Color);
-                Destroy(fallingShape);
+                Destroy(fallingShape.gameObject);
             }
         }
     }

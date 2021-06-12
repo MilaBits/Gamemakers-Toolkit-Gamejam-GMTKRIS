@@ -9,7 +9,7 @@ namespace DefaultNamespace
         public Vector2Int[] Shape;
         public Vector2Int Position;
         public Color Color;
-        public Vector2 Rotation;
+        public int Rotation; //Times rotated CW
     }
 
     // public class TTetromino : Tetromino
