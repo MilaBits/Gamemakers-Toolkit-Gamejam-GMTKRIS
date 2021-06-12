@@ -48,15 +48,15 @@ namespace DefaultNamespace
             for (int i = 0; i < nextShapeCount; i++)
             {
                 var shape = Instantiate(shapePrefab, transform, false);
-                shape.data = NewShape();
-                for (int j = 0; j < shape.data.Shape.Length; j++)
+                shape.tetromino = NewShape();
+                for (int j = 0; j < shape.tetromino.Shape.Length; j++)
                 {
-                    shape.transform.GetChild(j).localPosition = new Vector2(shape.data.Shape[j].x, shape.data.Shape[j].y);
-                    shape.transform.GetChild(j).GetComponent<SpriteRenderer>().color = shape.data.Color;
+                    shape.transform.GetChild(j).localPosition = new Vector2(shape.tetromino.Shape[j].x, shape.tetromino.Shape[j].y);
+                    shape.transform.GetChild(j).GetComponent<SpriteRenderer>().color = shape.tetromino.Color;
                 }
 
-                shape.renderer.Rotate(shape.data.Rotation * 90);
-                shape.renderer.id = shape.data.id;
+                shape.renderer.Rotate(shape.tetromino.Rotation * 90);
+                shape.renderer.id = shape.tetromino.id;
 
                 nextShapes.Add(shape);
             }
@@ -86,21 +86,19 @@ namespace DefaultNamespace
         {
             if (IsValidToPlace(shape, true))
             {
-                for (int i = 0; i < shape.data.Shape.Length; i++)
+                for (int i = 0; i < shape.tetromino.Shape.Length; i++)
                 {
-                    var pos = shape.data.Shape[i];
+                    var pos = shape.tetromino.Shape[i];
                     int x = (int) shape.transform.localPosition.x + pos.x;
                     int y = (int) shape.transform.localPosition.y + pos.y;
                     if (x < size.x && y < size.y && y >= 0)
                     {
                         tiles[x, y].State = 1;
-                        tiles[x, y].SetColor(shape.data.Color);
+                        tiles[x, y].SetColor(shape.tetromino.Color);
                         tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                         tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
                     }
                 }
-
-                // Destroy(movingShape.gameObject);
 
                 if (nextShapes.Count > 0)
                 {
@@ -108,12 +106,6 @@ namespace DefaultNamespace
                 }
                 else
                 {
-                    // GameObject shapeBundle = new GameObject();
-                    // for (int i = 0; i < placedShapes.Count; i++)
-                    // {
-                    // placedShapes[i].transform.SetParent(shapeBundle.transform, true);
-                    // }
-
                     ClearTiles();
 
                     var tetrisGrid = FindObjectOfType<TetrisGrid>();
@@ -140,10 +132,10 @@ namespace DefaultNamespace
 
         private bool IsValidToPlace(Shape shape, bool checkForState)
         {
-            for (int i = 0; i < shape.data.Shape.Length; i++)
+            for (int i = 0; i < shape.tetromino.Shape.Length; i++)
             {
-                int x = (int) shape.transform.localPosition.x + shape.data.Shape[i].x;
-                int y = (int) shape.transform.localPosition.y + shape.data.Shape[i].y;
+                int x = (int) shape.transform.localPosition.x + shape.tetromino.Shape[i].x;
+                int y = (int) shape.transform.localPosition.y + shape.tetromino.Shape[i].y;
 
                 if (x < 0 || x > size.x - 1 ||
                     y < 0 || y > size.y - 1) return false;
@@ -157,13 +149,16 @@ namespace DefaultNamespace
         {
             Vector2Int newPos = new Vector2Int((int) shape.transform.localPosition.x + direction.x, (int) shape.transform.localPosition.y + direction.y);
 
-            if (CanMove(shape, direction, false)) shape.transform.localPosition = new Vector3(newPos.x, newPos.y);
-            if (CanMove(shape, direction, true)) lastValidPositions = shape.data.Shape;
+            if (CanMove(shape, direction, false))
+            {
+                shape.transform.localPosition = new Vector3(newPos.x, newPos.y);
+                if (CanMove(shape, direction, true)) lastValidPositions = shape.tetromino.Shape;
+            }
         }
 
         private bool CanMove(Shape shape, Vector2Int direction, bool checkForState)
         {
-            foreach (var pos in shape.data.Shape)
+            foreach (var pos in shape.tetromino.Shape)
             {
                 int x = (int) shape.transform.localPosition.x + pos.x + direction.x;
                 int y = (int) shape.transform.localPosition.y + pos.y + direction.y;
@@ -178,9 +173,9 @@ namespace DefaultNamespace
 
         private bool CanRotate(Shape shape, bool clockwise, bool checkForState)
         {
-            for (int i = 0; i < shape.data.Shape.ToList().Count; i++)
+            for (int i = 0; i < shape.tetromino.Shape.ToList().Count; i++)
             {
-                var newpos = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
+                var newpos = shape.tetromino.Shape[i].Rotate(clockwise ? 90 : -90);
                 newpos += new Vector2Int((int) shape.transform.localPosition.x, (int) shape.transform.localPosition.y);
 
                 if (newpos.x < 0 || newpos.x > size.x - 1 ||
@@ -194,22 +189,22 @@ namespace DefaultNamespace
         private void Rotate(Shape shape, bool clockwise)
         {
             var newShape = new Vector2Int[4];
-            for (int i = 0; i < shape.data.Shape.ToList().Count; i++)
+            for (int i = 0; i < shape.tetromino.Shape.ToList().Count; i++)
             {
-                newShape[i] = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
+                newShape[i] = shape.tetromino.Shape[i].Rotate(clockwise ? 90 : -90);
             }
 
             if (CanRotate(shape, clockwise, false))
             {
-                shape.data.Shape = newShape;
-                for (int i = 0; i < newShape.Length; i++) shape.transform.GetChild(i).localPosition = new Vector2(shape.data.Shape[i].x, shape.data.Shape[i].y);
+                shape.tetromino.Shape = newShape;
+                for (int i = 0; i < newShape.Length; i++) shape.transform.GetChild(i).localPosition = new Vector2(shape.tetromino.Shape[i].x, shape.tetromino.Shape[i].y);
 
-                shape.data.Rotation += clockwise ? 1 : -1;
-                shape.data.Rotation = shape.data.Rotation % 4;
+                shape.tetromino.Rotation += clockwise ? 1 : -1;
+                shape.tetromino.Rotation = shape.tetromino.Rotation % 4;
                 shape.renderer.Rotate(clockwise ? 90 : -90);
-            }
 
-            if (CanRotate(shape, clockwise, true)) lastValidPositions = newShape;
+                if (CanRotate(shape, clockwise, true)) lastValidPositions = newShape;
+            }
         }
 
         private Shape NextShape()
@@ -233,7 +228,7 @@ namespace DefaultNamespace
                 bag = new Stack<Tetromino>(items);
             }
 
-            return bag.Pop();
+            return new Tetromino(bag.Pop());
         }
 
         public void InitGrid()

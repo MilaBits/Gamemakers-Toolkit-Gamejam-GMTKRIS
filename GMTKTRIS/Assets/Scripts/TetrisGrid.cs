@@ -162,28 +162,28 @@ public class TetrisGrid : MonoBehaviour
         fallingShape = Instantiate(shapePrefab);
 
         //fallingShape.data = shapes[Random.Range(0, shapes.Count)];
-        fallingShape.data = shapes[id];
+        fallingShape.tetromino = shapes[id];
         for (int i = 0;
-            i < fallingShape.data.Shape.Length;
+            i < fallingShape.tetromino.Shape.Length;
             i++)
         {
-            fallingShape.transform.GetChild(i).localPosition += new Vector3(fallingShape.data.Shape[i].x, fallingShape.data.Shape[i].y);
-            fallingShape.transform.GetChild(i).GetComponent<SpriteRenderer>().color = fallingShape.data.Color;
+            fallingShape.transform.GetChild(i).localPosition += new Vector3(fallingShape.tetromino.Shape[i].x, fallingShape.tetromino.Shape[i].y);
+            fallingShape.transform.GetChild(i).GetComponent<SpriteRenderer>().color = fallingShape.tetromino.Color;
         }
 
         // fallingShape.data.Position = new Vector2Int(Random.Range(2, 8), 17);
         fallingShape.transform.position = new Vector3(fallingShape.transform.position.x, fallingShape.transform.position.y);
-        fallingShape.renderer.Rotate(fallingShape.data.Rotation * 90);
+        fallingShape.renderer.Rotate(fallingShape.tetromino.Rotation * 90);
         fallingShape.renderer.id = id;
     }
 
     private bool CanRotate(Shape shape, bool clockwise)
     {
         for (int i = 0;
-            i < shape.data.Shape.ToList().Count;
+            i < shape.tetromino.Shape.ToList().Count;
             i++)
         {
-            var newpos = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
+            var newpos = shape.tetromino.Shape[i].Rotate(clockwise ? 90 : -90);
             newpos += new Vector2Int((int) shape.transform.position.x, (int) shape.transform.position.y);
             if (newpos.x < 0 || newpos.x > size.x - 1 || newpos.y < 0 || tiles[newpos.x, newpos.y].State != 0) return false;
         }
@@ -195,30 +195,30 @@ public class TetrisGrid : MonoBehaviour
     {
         var newShape = new Vector2Int[4];
         for (int i = 0;
-            i < shape.data.Shape.ToList().Count;
+            i < shape.tetromino.Shape.ToList().Count;
             i++)
         {
-            newShape[i] = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
+            newShape[i] = shape.tetromino.Shape[i].Rotate(clockwise ? 90 : -90);
             shape.transform.GetChild(i).transform.position = shape.transform.position + new Vector3(newShape[i].x, newShape[i].y);
         }
 
-        shape.data.Rotation += clockwise ? 1 : -1;
-        shape.data.Rotation = shape.data.Rotation % 4;
-        shape.data.Shape = newShape;
+        shape.tetromino.Rotation += clockwise ? 1 : -1;
+        shape.tetromino.Rotation = shape.tetromino.Rotation % 4;
+        shape.tetromino.Shape = newShape;
         shape.renderer.Rotate(clockwise ? 90 : -90);
     }
 
     private void SolidifyShape(Shape shape)
     {
-        for (int i = 0; i < shape.data.Shape.Length; i++)
+        for (int i = 0; i < shape.tetromino.Shape.Length; i++)
         {
-            var pos = shape.data.Shape[i];
+            var pos = shape.tetromino.Shape[i];
             var x = (int) shape.transform.position.x + pos.x;
             var y = (int) shape.transform.position.y + pos.y;
             if (x < size.x && y < size.y && y >= 0)
             {
                 tiles[x, y].State = 1;
-                tiles[x, y].SetColor(shape.data.Color);
+                tiles[x, y].SetColor(shape.tetromino.Color);
                 tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                 tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
             }
@@ -237,7 +237,7 @@ public class TetrisGrid : MonoBehaviour
 
     private bool CanMove(Shape shape, Vector2Int direction)
     {
-        foreach (var pos in shape.data.Shape)
+        foreach (var pos in shape.tetromino.Shape)
         {
             var x = (int) shape.transform.position.x + pos.x + direction.x;
             var y = (int) shape.transform.position.y + pos.y + direction.y;
