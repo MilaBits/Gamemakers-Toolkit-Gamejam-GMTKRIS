@@ -51,6 +51,16 @@ public class TetrominoRenderer : MonoBehaviour
             Console.WriteLine("TetrominoRenderer has no associated Tetromino components");
         }
     }
+
+    public void Rotate(float angle)
+    {
+        foreach (TetrominoComponent component in components)
+        {
+            Vector3 rotation = component.transform.rotation.eulerAngles;
+            rotation.z += angle;
+            component.transform.rotation = Quaternion.Euler(rotation);
+        }
+    }
 }
 
 public enum TetrominoID
