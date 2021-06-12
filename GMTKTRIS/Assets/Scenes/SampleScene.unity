@@ -248,10 +248,10 @@ MonoBehaviour:
     Color: {r: 0.94117653, g: 0, b: 0, a: 1}
     Rotation: 0
   - Shape:
-    - {x: 0, y: -1}
     - {x: 0, y: 0}
     - {x: 1, y: 0}
-    - {x: 1, y: 1}
+    - {x: -1, y: 1}
+    - {x: 0, y: 1}
     Position: {x: 0, y: 0}
     Color: {r: 0, g: 0.94117653, b: 0, a: 1}
     Rotation: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
     Rotation: 0
   shapePrefab: {fileID: 2219339228789870974, guid: 6d48c21d5f3544541a2ae30352f30f77, type: 3}
   inputDirection: {x: 0, y: 0}
-  originalTickLenght: 0.1
+  originalTickLenght: 0.3
 --- !u!4 &1546472554
 Transform:
   m_ObjectHideFlags: 0
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteData:
-  - ID: 0
+  - ID: 2
     Images:
     - {fileID: 21300000, guid: 1109996f72a425b4a9df9dc9cd195c18, type: 3}
     - {fileID: 21300000, guid: 1c65d9880bfb30b4dbc0ef6a0117a960, type: 3}
@@ -367,6 +367,12 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 2ac5fa62d55ede444acb18add9e2cf4b, type: 3}
     - {fileID: 21300000, guid: 0c160dba2338ee44db4fd183ef890724, type: 3}
     - {fileID: 21300000, guid: 6b6cee5f0b485e042a572251ed965a31, type: 3}
+  - ID: 1
+    Images:
+    - {fileID: 21300000, guid: f2619db6c56986b488edbfbf61d32887, type: 3}
+    - {fileID: 21300000, guid: d61dae157bb450c409c95157fe76f692, type: 3}
+    - {fileID: 21300000, guid: d61dae157bb450c409c95157fe76f692, type: 3}
+    - {fileID: 21300000, guid: d61dae157bb450c409c95157fe76f692, type: 3}
 --- !u!4 &1723996603
 Transform:
   m_ObjectHideFlags: 0

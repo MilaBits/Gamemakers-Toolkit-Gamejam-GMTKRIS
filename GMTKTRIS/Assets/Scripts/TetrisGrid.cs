@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
 public class TetrisGrid : MonoBehaviour
@@ -138,7 +139,8 @@ public class TetrisGrid : MonoBehaviour
 
     private void NewShape()
     {
-        const int id = 4;
+        //int id = Random.Range(0,7);
+        int id = 1;
         fallingShape = Instantiate(shapePrefab);
         fallingShape.data = shapes[id];
         for (int i = 0; i < fallingShape.data.Shape.Length; i++)
@@ -147,7 +149,7 @@ public class TetrisGrid : MonoBehaviour
             fallingShape.transform.GetChild(i).GetComponent<SpriteRenderer>().color = fallingShape.data.Color;
         }
 
-        fallingShape.data.Position = new Vector2Int(Random.Range(3, 8), 17);
+        fallingShape.data.Position = new Vector2Int(Random.Range(2, 8), 17);
         fallingShape.transform.position = new Vector3(fallingShape.data.Position.x, fallingShape.data.Position.y);
         fallingShape.renderer.Rotate(fallingShape.data.Rotation * 90);
         fallingShape.renderer.id = id;
