@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.elringus.spriteglow": "https://github.com/Elringus/SpriteGlow.git#package",
     "com.unity.2d.pixel-perfect": "4.0.1",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.5.7",
