@@ -137,12 +137,12 @@ public class TetrisGrid : MonoBehaviour
 
     private void NewShape()
     {
-        //int id = Random.Range(0,7);
-        int id = 1;
+        int id = Random.Range(0,7);
+        //int id = 1;
         fallingShape = Instantiate(shapePrefab);
 
-        fallingShape.data = shapes[Random.Range(0, shapes.Count)];
-        // fallingShape.data = shapes[4];
+        //fallingShape.data = shapes[Random.Range(0, shapes.Count)];
+        fallingShape.data = shapes[id];
         for (int i = 0;
             i < fallingShape.data.Shape.Length;
             i++)
