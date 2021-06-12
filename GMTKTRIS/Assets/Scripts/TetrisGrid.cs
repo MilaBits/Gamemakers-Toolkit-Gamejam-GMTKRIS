@@ -96,7 +96,7 @@ public class TetrisGrid : MonoBehaviour
     private int RemoveLines()
     {
         int fullRows = 0;
-        for (int y = 0; y < size.y; y++)
+        for (int y = size.y - 1; y >= 0; y--)
         {
             int filledCount = 0;
             for (int x = 0; x < size.x; x++)
@@ -107,12 +107,10 @@ public class TetrisGrid : MonoBehaviour
             if (filledCount == size.x)
             {
                 fullRows++;
+                RemoveLine(y);
             }
-        }
 
-        for (int i = fullRows; i > 0; i--)
-        {
-            RemoveLine(i-1);
+            filledCount = 0;
         }
 
         return fullRows;
@@ -128,9 +126,9 @@ public class TetrisGrid : MonoBehaviour
 
         for (int x = 0; x < size.x; x++)
         {
-            for (int y = 0; y < size.y - 1; y++)
+            for (int y = row; y < size.y - 1; y++)
             {
-                tiles[x, y] = tiles[x, y + 1];
+                tiles[x, y].State = tiles[x, y + 1].State;
                 tiles[x, y].SetColor(tiles[x, y + 1].GetColor());
             }
         }
@@ -139,9 +137,12 @@ public class TetrisGrid : MonoBehaviour
     private void NewShape()
     {
         fallingShape = Instantiate(shapePrefab);
-        // fallingShape.data = shapes[Random.Range(0, shapes.Count)];
-        fallingShape.data = shapes[4];
-        for (int i = 0; i < fallingShape.data.Shape.Length; i++)
+
+        fallingShape.data = shapes[Random.Range(0, shapes.Count)];
+        // fallingShape.data = shapes[4];
+        for (int i = 0;
+            i < fallingShape.data.Shape.Length;
+            i++)
         {
             fallingShape.transform.GetChild(i).localPosition += new Vector3(fallingShape.data.Shape[i].x, fallingShape.data.Shape[i].y);
             fallingShape.transform.GetChild(i).GetComponent<SpriteRenderer>().color = fallingShape.data.Color;
@@ -153,7 +154,9 @@ public class TetrisGrid : MonoBehaviour
 
     private bool CanRotate(Shape shape, bool clockwise)
     {
-        for (int i = 0; i < shape.data.Shape.ToList().Count; i++)
+        for (int i = 0;
+            i < shape.data.Shape.ToList().Count;
+            i++)
         {
             var newpos = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
             newpos += new Vector2Int((int) shape.transform.position.x, (int) shape.transform.position.y);
@@ -166,7 +169,9 @@ public class TetrisGrid : MonoBehaviour
     private void Rotate(Shape shape, bool clockwise)
     {
         var newShape = new Vector2Int[4];
-        for (int i = 0; i < shape.data.Shape.ToList().Count; i++)
+        for (int i = 0;
+            i < shape.data.Shape.ToList().Count;
+            i++)
         {
             newShape[i] = shape.data.Shape[i].Rotate(clockwise ? 90 : -90);
             shape.transform.GetChild(i).transform.position = shape.transform.position + new Vector3(newShape[i].x, newShape[i].y);
