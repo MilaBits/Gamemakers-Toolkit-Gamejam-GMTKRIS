@@ -40,7 +40,7 @@ namespace DefaultNamespace
             MakeNextShapes();
 
             ShowNextShapes();
-            NextShape();
+            NextShape(0);
         }
 
         private void MakeNextShapes()
@@ -80,6 +80,9 @@ namespace DefaultNamespace
             if (Input.GetKeyDown(KeyCode.Q)) Rotate(movingShape, false);
             if (Input.GetKeyDown(KeyCode.E)) Rotate(movingShape, true);
             if (Input.GetKeyDown(KeyCode.Space)) Place(movingShape);
+            if (Input.GetKeyDown(KeyCode.Alpha1)) SwitchShape(0);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) SwitchShape(1);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) SwitchShape(2);
         }
 
         private void Place(Shape shape)
@@ -102,7 +105,7 @@ namespace DefaultNamespace
 
                 if (nextShapes.Count > 0)
                 {
-                    NextShape();
+                    NextShape(0);
                 }
                 else
                 {
@@ -207,16 +210,31 @@ namespace DefaultNamespace
             }
         }
 
-        private Shape NextShape()
+        private Shape NextShape(int i)
         {
-            movingShape = nextShapes.ToList().First();
-            nextShapes.RemoveAt(0);
+            movingShape = nextShapes.ToList()[i];
+            nextShapes.RemoveAt(i);
+
             placedShapes.Add(movingShape);
 
             movingShape.transform.localPosition += new Vector3(0, 4);
 
             ShowNextShapes();
             return movingShape;
+        }
+
+        private void SwitchShape(int i)
+        {
+            if (nextShapes.Count >= i)
+            {
+                var pos = movingShape.transform.localPosition;
+                nextShapes.Add(movingShape);
+                placedShapes.Remove(movingShape);
+
+                NextShape(i);
+                movingShape.transform.localPosition = pos;
+                ShowNextShapes();
+            }
         }
 
         private Tetromino NewShape()
@@ -248,7 +266,7 @@ namespace DefaultNamespace
         {
             MakeNextShapes();
             ShowNextShapes();
-            NextShape();
+            NextShape(0);
             paused = false;
         }
     }
