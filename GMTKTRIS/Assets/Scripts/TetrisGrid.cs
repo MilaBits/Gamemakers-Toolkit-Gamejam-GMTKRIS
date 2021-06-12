@@ -54,15 +54,22 @@ public class TetrisGrid : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0) inputDirection = Input.GetAxis("Horizontal") > 0 ? Vector2Int.right : Vector2Int.left;
+        if (Input.GetAxis("Horizontal") < 0) inputDirection = Vector2Int.left;
+        if (Input.GetAxis("Horizontal") > 0) inputDirection = Vector2Int.right;
         if (Input.GetAxis("Vertical") < 0) realTickLength = originalTickLenght * 0.5f;
+
         else realTickLength = originalTickLenght;
 
         if (passedTickTime >= realTickLength)
         {
+            if (CanMove(fallingShape, inputDirection))
+            {
+                Move(fallingShape, inputDirection);
+            }
+
             if (CanMove(fallingShape, Vector2Int.down))
             {
-                Move(fallingShape, Vector2Int.down + inputDirection);
+                Move(fallingShape, Vector2Int.down);
                 DrawFallingShape();
             }
             else
@@ -108,7 +115,7 @@ public class TetrisGrid : MonoBehaviour
             fallingShape.transform.GetChild(i).GetComponent<SpriteRenderer>().color = fallingShape.data.Color;
         }
 
-        fallingShape.data.Position = new Vector2Int(5, 18);
+        fallingShape.data.Position = new Vector2Int(Random.Range(3, 8), 17);
         fallingShape.transform.position = new Vector3(fallingShape.data.Position.x, fallingShape.data.Position.y);
     }
 
