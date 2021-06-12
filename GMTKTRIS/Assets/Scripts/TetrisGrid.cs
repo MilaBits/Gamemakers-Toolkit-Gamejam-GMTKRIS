@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,6 +27,9 @@ public class TetrisGrid : MonoBehaviour
 
     public List<Shape> fallingShapes;
     public List<Shape> fallingShapeOffsets;
+
+    public int score;
+    public TextMeshProUGUI scoreText;
 
     private void Awake()
     {
@@ -97,7 +101,8 @@ public class TetrisGrid : MonoBehaviour
     private void ShapesHaveLanded(List<Shape> shapes)
     {
         SolidifyShapes(shapes);
-        RemoveLines();
+        score += RemoveLines();
+        scoreText.text = score.ToString();
 
         SwitchToBuildGrid();
     }
