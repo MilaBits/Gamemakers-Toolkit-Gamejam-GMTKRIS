@@ -22,8 +22,6 @@ public class TetrisGrid : MonoBehaviour
     private int[,] cells;
 
 
-    private bool rotate;
-    private bool clockwise;
     public Vector2Int inputDirection;
 
     public float originalTickLenght;
@@ -57,37 +55,22 @@ public class TetrisGrid : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetAxis("Horizontal") < 0) inputDirection = Vector2Int.left;
-        if (Input.GetAxis("Horizontal") > 0) inputDirection = Vector2Int.right;
+        // if (Input.GetAxis("Horizontal") < 0) inputDirection = Vector2Int.left;
+        // if (Input.GetAxis("Horizontal") > 0) inputDirection = Vector2Int.right;
         if (Input.GetAxis("Vertical") < 0) realTickLength = originalTickLenght * 0.5f;
         else realTickLength = originalTickLenght;
 
-        if (Input.GetKey(KeyCode.Q))
-        {
-            rotate = true;
-            clockwise = false;
-        }
+        if (Input.GetKeyDown(KeyCode.Q) && CanRotate(fallingShape, false)) Rotate(fallingShape, false);
+        if (Input.GetKeyDown(KeyCode.E) && CanRotate(fallingShape, true)) Rotate(fallingShape, true);
 
-        if (Input.GetKey(KeyCode.E))
+        if ((Input.GetAxis("Horizontal") != 0))
         {
-            rotate = true;
-            clockwise = false;
+            if (Input.GetKeyDown(KeyCode.D) && CanMove(fallingShape, Vector2Int.right)) Move(fallingShape, Vector2Int.right);
+            if (Input.GetKeyDown(KeyCode.A) && CanMove(fallingShape, Vector2Int.left)) Move(fallingShape, Vector2Int.left);
         }
 
         if (passedTickTime >= realTickLength)
         {
-            if (rotate && CanRotate(fallingShape))
-            {
-                Rotate(fallingShape, false);
-                rotate = false;
-            }
-
-            if (CanMove(fallingShape, inputDirection))
-            {
-                Move(fallingShape, inputDirection);
-                inputDirection = Vector2Int.zero;
-            }
-
             if (CanMove(fallingShape, Vector2Int.down))
             {
                 Move(fallingShape, Vector2Int.down);
@@ -137,7 +120,7 @@ public class TetrisGrid : MonoBehaviour
         fallingShape.transform.position = new Vector3(fallingShape.data.Position.x, fallingShape.data.Position.y);
     }
 
-    private bool CanRotate(Shape shape)
+    private bool CanRotate(Shape shape, bool clockwise)
     {
         for (int i = 0; i < shape.data.Shape.ToList().Count; i++)
         {
