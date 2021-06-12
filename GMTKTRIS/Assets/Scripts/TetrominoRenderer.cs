@@ -52,7 +52,7 @@ public class TetrominoRenderer : MonoBehaviour
     }
 }
 
-public enum Tetromino
+public enum TetrominoID
 {
     ZTetromino = 0,
     STetromino = 1,
