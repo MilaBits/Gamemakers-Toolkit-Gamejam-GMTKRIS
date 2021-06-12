@@ -27,4 +27,6 @@ public class Tile : MonoBehaviour
                 break;
         }
     }
+
+    public Color GetColor() => Renderer.color;
 }
