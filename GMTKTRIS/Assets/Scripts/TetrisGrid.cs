@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
@@ -33,6 +34,7 @@ public class TetrisGrid : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public UnityEvent Landed = new UnityEvent();
+    public UnityEvent RemovedBlock = new UnityEvent();
 
     private void Awake()
     {
@@ -104,7 +106,8 @@ public class TetrisGrid : MonoBehaviour
     private void ShapesHaveLanded(List<Shape> shapes)
     {
         SolidifyShapes(shapes);
-        score += RemoveLines();
+        StartCoroutine(RemoveLines());
+
         scoreText.text = score.ToString();
 
         Landed.Invoke();
@@ -122,7 +125,7 @@ public class TetrisGrid : MonoBehaviour
     }
 
 
-    private int RemoveLines()
+    private IEnumerator RemoveLines()
     {
         int fullRows = 0;
         for (int y = size.y - 1; y >= 0; y--)
@@ -130,27 +133,31 @@ public class TetrisGrid : MonoBehaviour
             int filledCount = 0;
             for (int x = 0; x < size.x; x++)
             {
-                if (tiles[x, y].State != 0) filledCount++;
+                if (tiles[x, y].Occupied) filledCount++;
             }
 
             if (filledCount == size.x)
             {
                 fullRows++;
-                RemoveLine(y);
+                StartCoroutine(RemoveLine(y));
+                yield return new WaitForSeconds(.5f);
             }
 
             filledCount = 0;
         }
 
-        return fullRows;
+        score += fullRows;
     }
 
-    private void RemoveLine(int row)
+    private IEnumerator RemoveLine(int row)
     {
         for (int i = 0; i < size.x - 1; i++)
         {
             tiles[i, row].State = 0;
+            tiles[i, row].Occupied = false;
             tiles[i, row].SetColor(new Color());
+            RemovedBlock.Invoke();
+            yield return new WaitForSeconds(.1f);
         }
 
         for (int x = 0; x < size.x; x++)
@@ -158,6 +165,7 @@ public class TetrisGrid : MonoBehaviour
             for (int y = row; y < size.y - 1; y++)
             {
                 tiles[x, y].State = tiles[x, y + 1].State;
+                tiles[x, y].Occupied = tiles[x, y + 1].Occupied;
                 tiles[x, y].SetColor(tiles[x, y + 1].GetColor());
                 tiles[x, y].SetSprite(tiles[x, y + 1].GetComponent<SpriteRenderer>().sprite);
                 tiles[x, y].transform.rotation = tiles[x, y + 1].transform.rotation;
@@ -195,7 +203,7 @@ public class TetrisGrid : MonoBehaviour
         {
             var newpos = shape.tetromino.Shape[i].Rotate(clockwise ? 90 : -90);
             newpos += new Vector2Int((int) shape.transform.position.x, (int) shape.transform.position.y);
-            if (newpos.x < 0 || newpos.x > size.x - 1 || newpos.y < 0 || tiles[newpos.x, newpos.y].State != 0) return false;
+            if (newpos.x < 0 || newpos.x > size.x - 1 || newpos.y < 0 || tiles[newpos.x, newpos.y].Occupied) return false;
         }
 
         return true;
@@ -228,6 +236,7 @@ public class TetrisGrid : MonoBehaviour
             if (x < size.x && y < size.y && y >= 0)
             {
                 tiles[x, y].State = shape.tetromino.id;
+                tiles[x, y].Occupied = true;
                 tiles[x, y].SetColor(shape.tetromino.Color);
                 tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                 tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
@@ -251,7 +260,7 @@ public class TetrisGrid : MonoBehaviour
         {
             var x = (int) shape.transform.position.x + pos.x + direction.x;
             var y = (int) shape.transform.position.y + pos.y + direction.y;
-            if (x < 0 || x > size.x - 1 || y < 0 || tiles[x, y].State != 0) return false;
+            if (x < 0 || x > size.x - 1 || y < 0 || tiles[x, y].Occupied) return false;
         }
 
         return true;
