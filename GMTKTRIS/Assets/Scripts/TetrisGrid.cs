@@ -18,7 +18,10 @@ public class TetrisGrid : MonoBehaviour
 
     public GameObject scriptObject;
     public GameObject shapeScriptObject;
-    
+
+    public AudioClip placeSound;
+    public AudioSource audioSource;
+
     [SerializeField]
     private Tile squarePrefab;
 
@@ -108,6 +111,8 @@ public class TetrisGrid : MonoBehaviour
     {
         SolidifyShapes(shapes);
         StartCoroutine(RemoveLines());
+        
+        audioSource.PlayOneShot(placeSound);
 
         Landed.Invoke();
 

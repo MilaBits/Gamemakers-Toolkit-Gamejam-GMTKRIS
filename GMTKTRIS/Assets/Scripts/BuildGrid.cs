@@ -15,6 +15,9 @@ namespace DefaultNamespace
         private Shape movingShape;
         public Shape shapePrefab;
 
+        public AudioClip placeSound;
+        public AudioSource audioSource;
+
         public Vector2Int size = new Vector2Int(10, 10);
 
         public List<Tetromino> shapes = new List<Tetromino>();
@@ -99,6 +102,8 @@ namespace DefaultNamespace
                         tiles[x, y].SetColor(shape.tetromino.Color);
                         tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                         tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
+                        
+                        audioSource.PlayOneShot(placeSound);
                     }
                 }
 
@@ -114,7 +119,6 @@ namespace DefaultNamespace
                     tetrisGrid.AddFallingShapes(placedShapes);
                     placedShapes = new List<Shape>();
                     movingShape = null;
-
                     paused = true;
                 }
             }
