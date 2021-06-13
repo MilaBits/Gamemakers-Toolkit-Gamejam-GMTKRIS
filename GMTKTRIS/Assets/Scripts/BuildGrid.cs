@@ -99,10 +99,11 @@ namespace DefaultNamespace
                     if (x < size.x && y < size.y && y >= 0)
                     {
                         tiles[x, y].State = 1;
+                        tiles[x, y].Occupied = true;
                         tiles[x, y].SetColor(shape.tetromino.Color);
                         tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                         tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
-                        
+
                         audioSource.PlayOneShot(placeSound);
                     }
                 }
@@ -131,6 +132,7 @@ namespace DefaultNamespace
                 for (int y = 0; y < size.y; y++)
                 {
                     tiles[x, y].State = 0;
+                    tiles[x, y].Occupied = false;
                     tiles[x, y].SetColor(new Color());
                 }
             }
@@ -138,16 +140,35 @@ namespace DefaultNamespace
 
         private bool IsValidToPlace(Shape shape, bool checkForState)
         {
+            bool hasAdjacent = false;
             for (int i = 0; i < shape.tetromino.Shape.Length; i++)
             {
                 int x = (int) shape.transform.localPosition.x + shape.tetromino.Shape[i].x;
                 int y = (int) shape.transform.localPosition.y + shape.tetromino.Shape[i].y;
 
+                if (placedShapes.Count > 0)
+                {
+                    if (ExistsAndIsOccupied(new Vector2Int(x, y) + Vector2Int.up)) hasAdjacent = true;
+                    if (!hasAdjacent && ExistsAndIsOccupied(new Vector2Int(x, y) + Vector2Int.left)) hasAdjacent = true;
+                    if (!hasAdjacent && ExistsAndIsOccupied(new Vector2Int(x, y) + Vector2Int.down)) hasAdjacent = true;
+                    if (!hasAdjacent && ExistsAndIsOccupied(new Vector2Int(x, y) + Vector2Int.right)) hasAdjacent = true;
+                }
+
                 if (x < 0 || x > size.x - 1 ||
                     y < 0 || y > size.y - 1) return false;
-                if (checkForState && tiles[x, y].State != 0) return false;
+                if (checkForState && tiles[x, y].Occupied) return false;
             }
 
+            if (placedShapes.Count > 1 && hasAdjacent) return true;
+            if (placedShapes.Count > 1 && !hasAdjacent) return false;
+
+            return true;
+        }
+
+        private bool ExistsAndIsOccupied(Vector2Int pos)
+        {
+            if (pos.x < 0 || pos.x > size.x - 1 ||
+                pos.y < 0 || pos.y > size.y - 1 || !tiles[pos.x, pos.y].Occupied) return false;
             return true;
         }
 

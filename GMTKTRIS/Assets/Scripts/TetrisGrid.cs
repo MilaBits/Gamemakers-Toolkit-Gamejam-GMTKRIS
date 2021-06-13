@@ -46,6 +46,7 @@ public class TetrisGrid : MonoBehaviour
 
     public UnityEvent Landed = new UnityEvent();
     public UnityEvent RemovedBlock = new UnityEvent();
+    public UnityEvent Lost = new UnityEvent();
 
     private void Awake()
     {
@@ -111,7 +112,7 @@ public class TetrisGrid : MonoBehaviour
     {
         SolidifyShapes(shapes);
         StartCoroutine(RemoveLines());
-        
+
         audioSource.PlayOneShot(placeSound);
 
         Landed.Invoke();
@@ -153,11 +154,11 @@ public class TetrisGrid : MonoBehaviour
 
     private IEnumerator RemoveLine(int row)
     {
-
         foreach (var shapeScript in ShapeScripts)
         {
             shapeScript.RemoveComponentsInRow(row, singleCat);
         }
+
         for (int i = 0; i < size.x - 1; i++)
         {
             tiles[i, row].State = 0;
@@ -187,7 +188,7 @@ public class TetrisGrid : MonoBehaviour
     {
         int id = Random.Range(0, 7);
         fallingShape = Instantiate(shapePrefab);
-        
+
 
         fallingShape.tetromino = shapes[id];
         for (int i = 0;
@@ -249,7 +250,7 @@ public class TetrisGrid : MonoBehaviour
                 tiles[x, y].SetColor(shape.tetromino.Color);
                 tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                 tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
-                thing.AddComponent(tiles[x,y].gameObject, y);
+                thing.AddComponent(tiles[x, y].gameObject, y);
             }
         }
 
@@ -301,8 +302,6 @@ public class TetrisGrid : MonoBehaviour
 
     public void AddFallingShapes(List<Shape> placedShapes)
     {
-        
-        
         fallingShapes = placedShapes.ToList();
 
         for (int i = 0; i < fallingShapes.Count; i++)
@@ -318,6 +317,27 @@ public class TetrisGrid : MonoBehaviour
             fallingShapes[i].ShapeScript = shapeScript;
         }
         
+        if (fallingShapes.Any(x => !IsValidToPlace(x, true)))
+        {
+            Lost.Invoke();
+            return;
+        }
+
         paused = false;
+    }
+
+    private bool IsValidToPlace(Shape shape, bool checkForState)
+    {
+        for (int i = 0; i < shape.tetromino.Shape.Length; i++)
+        {
+            int x = (int) shape.transform.position.x + shape.tetromino.Shape[i].x;
+            int y = (int) shape.transform.position.y + shape.tetromino.Shape[i].y;
+
+            if (x < 0 || x > size.x - 1 ||
+                y < 0 || y > size.y - 1) return false;
+            if (checkForState && tiles[x, y].Occupied) return false;
+        }
+
+        return true;
     }
 }
