@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -7,10 +8,21 @@ namespace DefaultNamespace
     public class Tetromino
     {
         public Vector2Int[] Shape;
-        public Vector2Int Position;
+
+        // public Vector2Int Position;
+        public int id;
         public Color Color;
         public int Rotation; //Times rotated CW
+
+        public Tetromino(Tetromino origin)
+        {
+            this.Shape = origin.Shape.ToArray();
+            this.id = origin.id;
+            this.Color = origin.Color;
+            this.Rotation = origin.Rotation;
+        }
     }
+
 
     // public class TTetromino : Tetromino
     // {

@@ -5,7 +5,7 @@ namespace DefaultNamespace
 {
     public class Shape : MonoBehaviour
     {
-        public Tetromino data;
+        public Tetromino tetromino;
         public TetrominoRenderer renderer;
 
         private void Awake()
