@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 154695316}
   - component: {fileID: 154695318}
   - component: {fileID: 154695317}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 165264761}
   - component: {fileID: 165264763}
   - component: {fileID: 165264762}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 259715464}
   - component: {fileID: 259715466}
   - component: {fileID: 259715465}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,8 +582,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5e4d41116a488c84aa9e54e6b4b7f783, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: d58a725aaec5c4342811a033e3af3125, type: 3}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -601,8 +601,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351783846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5, y: 10, z: 3}
-  m_LocalScale: {x: 2.14075, y: 2.12625, z: 1}
+  m_LocalPosition: {x: -0.69548035, y: 8.252117, z: 3}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 362799844}
   - component: {fileID: 362799843}
   - component: {fileID: 362799842}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,7 +785,7 @@ GameObject:
   - component: {fileID: 463930439}
   - component: {fileID: 463930441}
   - component: {fileID: 463930440}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 633987595}
   - component: {fileID: 633987597}
   - component: {fileID: 633987596}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1053,7 +1053,7 @@ GameObject:
   - component: {fileID: 854905463}
   - component: {fileID: 854905465}
   - component: {fileID: 854905464}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1176,6 +1176,110 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854905462}
   m_CullTransparentMesh: 1
+--- !u!1 &920400613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 920400617}
+  - component: {fileID: 920400616}
+  - component: {fileID: 920400615}
+  - component: {fileID: 920400614}
+  m_Layer: 7
+  m_Name: Main Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &920400614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920400613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AssetsPPU: 30
+  m_RefResolutionX: 1280
+  m_RefResolutionY: 720
+  m_UpscaleRT: 0
+  m_PixelSnapping: 1
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
+--- !u!81 &920400615
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920400613}
+  m_Enabled: 1
+--- !u!20 &920400616
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920400613}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 1
+  orthographic size: 12
+  m_Depth: 1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 128
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &920400617
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920400613}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 963194228}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,8 +1293,9 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
-  m_Layer: 0
-  m_Name: Main Camera
+  - component: {fileID: 963194231}
+  m_Layer: 6
+  m_Name: Cat Cam
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1232,10 +1337,10 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 12
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1257,7 +1362,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.5, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 920400617}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1281,25 +1387,83 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
---- !u!95 &963194230
-Animator:
-  serializedVersion: 3
+--- !u!114 &963194230
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8c3d4fd14698f584a8bbc5262a523d92, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 963194228}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 1
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 1
+  m_ShowCustomSorter: 1
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: b70d432c08feda54797210f71588fe73, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &1018176125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1311,7 +1475,7 @@ GameObject:
   - component: {fileID: 1018176126}
   - component: {fileID: 1018176128}
   - component: {fileID: 1018176127}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1445,7 +1609,7 @@ GameObject:
   - component: {fileID: 1021253228}
   - component: {fileID: 1021253230}
   - component: {fileID: 1021253229}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1578,7 +1742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1139033208}
   - component: {fileID: 1139033209}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1640,7 +1804,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.32941177}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.039215688}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1660,7 +1824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1194396118}
   - component: {fileID: 1194396119}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1722,7 +1886,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.32941177}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.039215688}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1742,7 +1906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251311154}
   - component: {fileID: 1251311155}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1789,7 +1953,7 @@ GameObject:
   - component: {fileID: 1530943187}
   - component: {fileID: 1530943189}
   - component: {fileID: 1530943188}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1922,7 +2086,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1546472554}
   - component: {fileID: 1546472553}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1958,7 +2122,7 @@ MonoBehaviour:
     - {x: -1, y: 1}
     - {x: 0, y: 1}
     id: 1
-    Color: {r: 0, g: 0.94117653, b: 0, a: 1}
+    Color: {r: 0, g: 1, b: 0, a: 1}
     Rotation: 0
   - Shape:
     - {x: 0, y: -1}
@@ -1974,7 +2138,7 @@ MonoBehaviour:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
     id: 3
-    Color: {r: 0.627451, g: 0, b: 0.94117653, a: 1}
+    Color: {r: 1, g: 0, b: 1, a: 1}
     Rotation: 0
   - Shape:
     - {x: 0, y: 0}
@@ -2007,21 +2171,6 @@ MonoBehaviour:
   fallingShapeOffsets: []
   score: 0
   scoreText: {fileID: 1530943188}
-  Landed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 963194230}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: Shake
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!4 &1546472554
 Transform:
   m_ObjectHideFlags: 0
@@ -2048,7 +2197,7 @@ GameObject:
   - component: {fileID: 1562069059}
   - component: {fileID: 1562069061}
   - component: {fileID: 1562069060}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2267,7 +2416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1775843333}
   - component: {fileID: 1775843334}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Panel (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2313,7 +2462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1793089057}
   - component: {fileID: 1793089058}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Panel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2427,7 +2576,7 @@ GameObject:
   - component: {fileID: 1893531620}
   - component: {fileID: 1893531623}
   - component: {fileID: 1893531622}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2546,7 +2695,7 @@ GameObject:
   - component: {fileID: 1905417480}
   - component: {fileID: 1905417479}
   - component: {fileID: 1905417478}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2665,7 +2814,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968829846}
   - component: {fileID: 1968829847}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BuildGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2680,7 +2829,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968829845}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11, y: 10, z: 0}
+  m_LocalPosition: {x: 12, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1194396118}
@@ -2717,7 +2866,7 @@ MonoBehaviour:
     - {x: -1, y: 1}
     - {x: 0, y: 1}
     id: 1
-    Color: {r: 0, g: 0.94117653, b: 0, a: 1}
+    Color: {r: 0, g: 1, b: 0, a: 1}
     Rotation: 0
   - Shape:
     - {x: 0, y: -1}
@@ -2733,7 +2882,7 @@ MonoBehaviour:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
     id: 3
-    Color: {r: 0.627451, g: 0, b: 0.94117653, a: 1}
+    Color: {r: 1, g: 0, b: 1, a: 1}
     Rotation: 0
   - Shape:
     - {x: 0, y: 0}
@@ -2774,7 +2923,7 @@ GameObject:
   - component: {fileID: 1971270603}
   - component: {fileID: 1971270605}
   - component: {fileID: 1971270604}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2820,7 +2969,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Line Clears
+  m_text: Score
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2907,7 +3056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1985308837}
   - component: {fileID: 1985308838}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Panel (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

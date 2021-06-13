@@ -53,7 +53,7 @@ namespace DefaultNamespace
                 {
                     shape.transform.GetChild(j).localPosition = new Vector2(shape.tetromino.Shape[j].x, shape.tetromino.Shape[j].y);
                     shape.transform.GetChild(j).GetComponent<SpriteRenderer>().color = shape.tetromino.Color;
-                    shape.transform.GetChild(j).GetComponentInChildren<Light>().color = shape.tetromino.Color;
+                    //shape.transform.GetChild(j).GetComponentInChildren<Light>().color = shape.tetromino.Color;
                 }
 
                 shape.renderer.Rotate(shape.tetromino.Rotation * 90);
