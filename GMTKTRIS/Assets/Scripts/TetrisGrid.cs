@@ -227,7 +227,7 @@ public class TetrisGrid : MonoBehaviour
             var y = (int) shape.transform.position.y + pos.y;
             if (x < size.x && y < size.y && y >= 0)
             {
-                tiles[x, y].State = 1;
+                tiles[x, y].State = shape.tetromino.id;
                 tiles[x, y].SetColor(shape.tetromino.Color);
                 tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                 tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
