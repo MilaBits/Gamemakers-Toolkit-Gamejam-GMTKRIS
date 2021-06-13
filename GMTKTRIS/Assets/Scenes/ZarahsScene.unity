@@ -3665,7 +3665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717a4091e5f0be347bf401cd0bb526a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  components: []
 --- !u!1 &783399128
 GameObject:
   m_ObjectHideFlags: 0
@@ -6650,6 +6649,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: {x: 10, y: 20}
+  ShapeScripts: []
+  singleCat: {fileID: 21300000, guid: a34a72ed444c40449943b3a8cb37782e, type: 3}
   scriptObject: {fileID: 1723996601}
   shapeScriptObject: {fileID: 671218137}
   squarePrefab: {fileID: 7354637411103497151, guid: c8660cbf7f2671246b8c801820b69e6e, type: 3}

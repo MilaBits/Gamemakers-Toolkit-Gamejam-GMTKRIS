@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShapeScript : MonoBehaviour
 {
     public List<SubComponents> components = new List<SubComponents>();
 
     private bool started = false;
+    private bool modified = false;
 
     public void InitStarted()
     {
@@ -17,13 +19,25 @@ public class ShapeScript : MonoBehaviour
         components.Add(new SubComponents(component, row));
     }
 
-    public void RemoveComponentsInRow(int row)
+    public void RemoveComponentsInRow(int row, Sprite singleCat)
     {
-        foreach (var subComponents in components)
+        for (int i = 0; i < components.Count; i++)
         {
+            var subComponents = components[i];
             if (subComponents.row == row)
             {
-                Debug.Log("Piece deleted");
+                modified = true;
+                components.Remove(subComponents);
+                i--;
+            }
+        }
+
+        if (modified)
+        {
+            foreach (var subComponents in components)
+            {
+                var go = subComponents.go;
+                go.GetComponent<SpriteRenderer>().sprite = singleCat;
             }
         }
     }

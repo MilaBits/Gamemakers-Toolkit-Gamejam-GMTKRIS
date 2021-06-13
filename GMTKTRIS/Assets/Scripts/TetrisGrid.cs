@@ -5,6 +5,7 @@ using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TetrisGrid : MonoBehaviour
@@ -12,6 +13,8 @@ public class TetrisGrid : MonoBehaviour
     public Vector2Int size = new Vector2Int(10, 20);
 
     public List<ShapeScript> ShapeScripts = new List<ShapeScript>();
+
+    public Sprite singleCat;
 
     public GameObject scriptObject;
     public GameObject shapeScriptObject;
@@ -149,12 +152,11 @@ public class TetrisGrid : MonoBehaviour
 
     private IEnumerator RemoveLine(int row)
     {
-        Debug.Log("here");
 
-        /*foreach (var shapeScript in ShapeScripts)
+        foreach (var shapeScript in ShapeScripts)
         {
-            shapeScript.RemoveComponentsInRow(row);
-        }*/
+            shapeScript.RemoveComponentsInRow(row, singleCat);
+        }
         for (int i = 0; i < size.x - 1; i++)
         {
             tiles[i, row].State = 0;
