@@ -3,6 +3,7 @@ using System.Linq;
 using DefaultNamespace;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class TetrisGrid : MonoBehaviour
@@ -30,6 +31,8 @@ public class TetrisGrid : MonoBehaviour
 
     public int score;
     public TextMeshProUGUI scoreText;
+
+    public UnityEvent Landed = new UnityEvent();
 
     private void Awake()
     {
@@ -103,6 +106,8 @@ public class TetrisGrid : MonoBehaviour
         SolidifyShapes(shapes);
         score += RemoveLines();
         scoreText.text = score.ToString();
+
+        Landed.Invoke();
 
         SwitchToBuildGrid();
     }
