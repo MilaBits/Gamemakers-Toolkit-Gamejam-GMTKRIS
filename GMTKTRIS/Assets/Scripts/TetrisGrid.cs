@@ -108,8 +108,6 @@ public class TetrisGrid : MonoBehaviour
         SolidifyShapes(shapes);
         StartCoroutine(RemoveLines());
 
-        scoreText.text = score.ToString();
-
         Landed.Invoke();
 
         SwitchToBuildGrid();
@@ -145,8 +143,6 @@ public class TetrisGrid : MonoBehaviour
 
             filledCount = 0;
         }
-
-        score += fullRows;
     }
 
     private IEnumerator RemoveLine(int row)
@@ -159,6 +155,9 @@ public class TetrisGrid : MonoBehaviour
             RemovedBlock.Invoke();
             yield return new WaitForSeconds(.1f);
         }
+
+        score++;
+        scoreText.text = score.ToString();
 
         for (int x = 0; x < size.x; x++)
         {

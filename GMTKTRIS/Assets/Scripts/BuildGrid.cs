@@ -67,7 +67,7 @@ namespace DefaultNamespace
         {
             for (int i = 0; i < nextShapes.Count; i++)
             {
-                nextShapes[i].transform.localPosition = new Vector3(1 + i * 3, -3);
+                nextShapes[i].transform.localPosition = new Vector3(1 + i * 4, -4);
             }
         }
 
@@ -218,7 +218,7 @@ namespace DefaultNamespace
 
             placedShapes.Add(movingShape);
 
-            movingShape.transform.localPosition += new Vector3(0, 4);
+            movingShape.transform.localPosition += new Vector3(0, 5);
 
             ShowNextShapes();
             return movingShape;
