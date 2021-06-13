@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    public bool Occupied;
     public int State;
     public SpriteRenderer Renderer;
 

@@ -6719,6 +6719,21 @@ MonoBehaviour:
   scoreText: {fileID: 1530943188}
   Landed:
     m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 963194232}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Shake
+          m_BoolArgument: 0
+        m_CallState: 2
+  RemovedBlock:
+    m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1546472554
 Transform:
@@ -6770,7 +6785,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546472552}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 76303ec8a70ddc54eb031a453d77eedb, type: 3}
