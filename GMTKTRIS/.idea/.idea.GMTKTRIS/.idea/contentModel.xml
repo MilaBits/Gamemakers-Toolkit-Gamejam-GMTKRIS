@@ -10,7 +10,7 @@
           <e p="BuildGrid.cs" t="Include" />
           <e p="ExtensionMethods.cs" t="Include" />
           <e p="Grid2D.cs" t="Include" />
-          <e p="Meta Keys.cs" t="Include" />
+          <e p="MetaKeys.cs" t="Include" />
           <e p="PhysicsTetris.cs" t="Include" />
           <e p="Shape.cs" t="Include" />
           <e p="Tetris.cs" t="Include" />
