@@ -13,6 +13,7 @@
           <e p="MetaKeys.cs" t="Include" />
           <e p="PhysicsTetris.cs" t="Include" />
           <e p="Shape.cs" t="Include" />
+          <e p="ShapeScript.cs" t="Include" />
           <e p="Tetris.cs" t="Include" />
           <e p="TetrisGrid.cs" t="Include" />
           <e p="Tetromino.cs" t="Include" />

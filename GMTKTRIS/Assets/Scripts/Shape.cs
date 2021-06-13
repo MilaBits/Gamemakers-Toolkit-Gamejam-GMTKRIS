@@ -7,6 +7,7 @@ namespace DefaultNamespace
     {
         public Tetromino tetromino;
         public TetrominoRenderer renderer;
+        public ShapeScript ShapeScript;
 
         private void Awake()
         {

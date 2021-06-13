@@ -5,12 +5,20 @@ using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class TetrisGrid : MonoBehaviour
 {
     public Vector2Int size = new Vector2Int(10, 20);
 
+    public List<ShapeScript> ShapeScripts = new List<ShapeScript>();
+
+    public Sprite singleCat;
+
+    public GameObject scriptObject;
+    public GameObject shapeScriptObject;
+    
     [SerializeField]
     private Tile squarePrefab;
 
@@ -45,7 +53,6 @@ public class TetrisGrid : MonoBehaviour
     {
         realTickLength = originalTickLenght;
         InitGrid();
-        // NewShape();
     }
 
     [ContextMenu("Draw")]
@@ -68,9 +75,6 @@ public class TetrisGrid : MonoBehaviour
         if (Input.GetAxis("Vertical") < 0) realTickLength = originalTickLenght * 0.5f;
         else realTickLength = originalTickLenght;
 
-        // if (Input.GetKeyDown(KeyCode.Q) && CanRotate(fallingShape, false)) Rotate(fallingShape, false);
-        // if (Input.GetKeyDown(KeyCode.E) && CanRotate(fallingShape, true)) Rotate(fallingShape, true);
-
         if (Input.GetAxis("Horizontal") != 0)
         {
             if (Input.GetKeyDown(KeyCode.D) && CanMove(fallingShapes, Vector2Int.right)) Move(fallingShapes, Vector2Int.right);
@@ -85,7 +89,6 @@ public class TetrisGrid : MonoBehaviour
             }
             else
             {
-                // ShapeHasLanded(fallingShape);
                 ShapesHaveLanded(fallingShapes);
             }
 
@@ -99,8 +102,6 @@ public class TetrisGrid : MonoBehaviour
     {
         SolidifyShape(shape);
         RemoveLines();
-
-        // NewShape();
     }
 
     private void ShapesHaveLanded(List<Shape> shapes)
@@ -147,6 +148,11 @@ public class TetrisGrid : MonoBehaviour
 
     private IEnumerator RemoveLine(int row)
     {
+
+        foreach (var shapeScript in ShapeScripts)
+        {
+            shapeScript.RemoveComponentsInRow(row, singleCat);
+        }
         for (int i = 0; i < size.x - 1; i++)
         {
             tiles[i, row].State = 0;
@@ -175,10 +181,9 @@ public class TetrisGrid : MonoBehaviour
     private void NewShape()
     {
         int id = Random.Range(0, 7);
-        //int id = 1;
         fallingShape = Instantiate(shapePrefab);
+        
 
-        //fallingShape.data = shapes[Random.Range(0, shapes.Count)];
         fallingShape.tetromino = shapes[id];
         for (int i = 0;
             i < fallingShape.tetromino.Shape.Length;
@@ -188,7 +193,6 @@ public class TetrisGrid : MonoBehaviour
             fallingShape.transform.GetChild(i).GetComponent<SpriteRenderer>().color = fallingShape.tetromino.Color;
         }
 
-        // fallingShape.data.Position = new Vector2Int(Random.Range(2, 8), 17);
         fallingShape.transform.position = new Vector3(fallingShape.transform.position.x, fallingShape.transform.position.y);
         fallingShape.renderer.Rotate(fallingShape.tetromino.Rotation * 90);
         fallingShape.renderer.id = id;
@@ -227,6 +231,7 @@ public class TetrisGrid : MonoBehaviour
 
     private void SolidifyShape(Shape shape)
     {
+        var thing = shape.ShapeScript;
         for (int i = 0; i < shape.tetromino.Shape.Length; i++)
         {
             var pos = shape.tetromino.Shape[i];
@@ -239,6 +244,7 @@ public class TetrisGrid : MonoBehaviour
                 tiles[x, y].SetColor(shape.tetromino.Color);
                 tiles[x, y].SetSprite(shape.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite);
                 tiles[x, y].transform.rotation = shape.transform.GetChild(i).rotation;
+                thing.AddComponent(tiles[x,y].gameObject, y);
             }
         }
 
@@ -277,7 +283,6 @@ public class TetrisGrid : MonoBehaviour
 
     private void Move(Shape shape, Vector2Int direction)
     {
-        // shape.data.Position += direction;
         shape.transform.position += new Vector3(direction.x, direction.y);
     }
 
@@ -291,15 +296,23 @@ public class TetrisGrid : MonoBehaviour
 
     public void AddFallingShapes(List<Shape> placedShapes)
     {
+        
+        
         fallingShapes = placedShapes.ToList();
 
         for (int i = 0; i < fallingShapes.Count; i++)
         {
+            // make a game objects
+            var go = Instantiate(shapeScriptObject, scriptObject.transform);
+            var shapeScript = go.GetComponent<ShapeScript>();
+            ShapeScripts.Add(shapeScript);
+
             var pos = placedShapes[i].transform.localPosition + new Vector3(0, 10);
             fallingShapes[i].transform.SetParent(transform);
             fallingShapes[i].transform.position = pos;
+            fallingShapes[i].ShapeScript = shapeScript;
         }
-
+        
         paused = false;
     }
 }
