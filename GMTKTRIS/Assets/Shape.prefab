@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9087505467654915029}
   - component: {fileID: 2219339228789870974}
   - component: {fileID: 1186676044123711591}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,11 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08942875599c4251a7461cbd70468d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data:
+  tetromino:
     Shape: []
-    Position: {x: 0, y: 0}
+    id: 0
     Color: {r: 0, g: 0, b: 0, a: 0}
-    Rotation: {x: 0, y: 0}
+    Rotation: 0
+  renderer: {fileID: 0}
 --- !u!114 &1186676044123711591
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3648153320570111950}
   - component: {fileID: 746190981635156032}
   - component: {fileID: 7354637411103497151}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 05086dc459a1d4e47b1791eb5cc1361f, type: 2}
+  - {fileID: 2100000, guid: 858701814dcb7834b9ba9c01602d3caf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
